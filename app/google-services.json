@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "364397331283",
+    "firebase_url": "https://memento-cc796.firebaseio.com",
+    "project_id": "memento-cc796",
+    "storage_bucket": "memento-cc796.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364397331283:android:a79f4a767e61638604d7a6",
+        "android_client_info": {
+          "package_name": "com.example.memento"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364397331283-j76fudsivai62co1ps5p7m4atnhg91b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxnxvMRZZ81ZjZ1tx7za9aadP1WeYab0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364397331283-j76fudsivai62co1ps5p7m4atnhg91b7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
