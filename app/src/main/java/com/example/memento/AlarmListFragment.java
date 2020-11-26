@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.*;
 
-public class AlarmListFragment  extends Fragment {
+public class AlarmListFragment  extends Fragment implements OnToggleAlarmListener{
     private AlarmRecyclerViewAdapter alarmRecyclerViewAdapter;
     private RecyclerView alarmsRecyclerView;
     private Button addAlarm;

@@ -10,6 +10,84 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class Alarm {
+    public int getAlarmId() {
+        return alarmId;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public boolean isRecurring() {
+        return recurring;
+    }
+
+    public boolean isMonday() {
+        return monday;
+    }
+
+    public boolean isTuesday() {
+        return tuesday;
+    }
+
+    public boolean isWednesday() {
+        return wednesday;
+    }
+
+    public boolean isThursday() {
+        return thursday;
+    }
+
+    public boolean isFriday() {
+        return friday;
+    }
+
+    public boolean isSaturday() {
+        return saturday;
+    }
+
+    public boolean isSunday() {
+        return sunday;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAlarmDays() {
+        if (!recurring) {
+            return null;
+        }
+
+        String days = "";
+        if (monday) {
+            days += "Mo ";
+        }
+        if (tuesday) {
+            days += "Tu ";
+        }
+        if (wednesday) {
+            days += "We ";
+        }
+        if (thursday) {
+            days += "Th ";
+        }
+        if (friday) {
+            days += "Fr ";
+        }
+        if (saturday) {
+            days += "Sa ";
+        }
+        if (sunday) {
+            days += "Su ";
+        }
+
+        return days;
+    }
 
     private int alarmId;
 
@@ -85,29 +163,8 @@ public class Alarm {
                     alarmPendingIntent
             );
         } else {
-            String days = "";
-            if (monday) {
-                days += "Mo ";
-            }
-            if (tuesday) {
-                days += "Tu ";
-            }
-            if (wednesday) {
-                days += "We ";
-            }
-            if (thursday) {
-                days += "Th ";
-            }
-            if (friday) {
-                days += "Fr ";
-            }
-            if (saturday) {
-                days += "Sa ";
-            }
-            if (sunday) {
-                days += "Su ";
-            }
-            String toastText = String.format("Recurring Alarm %s scheduled for %s at %02d:%02d", title, days, hour, minute, alarmId);
+
+            String toastText = String.format("Recurring Alarm %s scheduled for %s at %02d:%02d", title,this.getAlarmDays(), hour, minute, alarmId);
             Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
 
             final long RUN_DAILY = 24 * 60 * 60 * 1000;

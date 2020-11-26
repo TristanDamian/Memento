@@ -67,5 +67,5 @@ public class RingActivity extends AppCompatActivity {
 
         }
 
-    }
 }
+

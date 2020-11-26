@@ -46,4 +46,4 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
         notifyDataSetChanged();
     }
 }
-}
+

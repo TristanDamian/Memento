@@ -109,7 +109,7 @@ public class NewTaskFragment extends Fragment {
                 sun.isChecked()
         );
 
-        AlarmDatabase.insert(alarm);
+        //AlarmDatabase.insert(alarm);
 
         alarm.schedule(getContext());
     }
