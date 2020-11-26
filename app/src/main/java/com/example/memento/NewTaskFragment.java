@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +22,18 @@ import java.util.Random;
 
 
 public class NewTaskFragment extends Fragment {
-    TimePicker timePicker = (TimePicker)findViewById(R.id.fragment_createalarm_timePicker);
-    EditText title = (EditText)findViewById(R.id.fragment_createalarm_title);
-    Button scheduleAlarm = (Button)findViewById(R.id.fragment_createalarm_scheduleAlarm);
-    CheckBox recurring = (CheckBox) findViewById(R.id.fragment_createalarm_recurring );
-    CheckBox mon = (CheckBox) findViewById(R.id.fragment_createalarm_checkMon );
-    CheckBox tue = (CheckBox) findViewById(R.id.fragment_createalarm_checkTue );
-    CheckBox wed = (CheckBox) findViewById(R.id.fragment_createalarm_checkWed );
-    CheckBox thu = (CheckBox) findViewById(R.id.fragment_createalarm_checkThu );
-    CheckBox fri = (CheckBox) findViewById(R.id.fragment_createalarm_checkFri );
-    CheckBox sat = (CheckBox) findViewById(R.id.fragment_createalarm_checkSat );
-    CheckBox sun = (CheckBox) findViewById(R.id.fragment_createalarm_checkSun );
-    LinearLayout recurringOptions = (LinearLayout) findViewById(R.id.fragment_createalarm_recurring_options );
+    TimePicker timePicker;
+    EditText title;
+    Button scheduleAlarm;
+    CheckBox recurring;
+    CheckBox mon;
+    CheckBox tue;
+    CheckBox wed;
+    CheckBox thu;
+    CheckBox fri;
+    CheckBox sat;
+    CheckBox sun;
+    LinearLayout recurringOptions;
     // TODO: Rename parameter arguments, choose names that match
 
 
@@ -45,6 +46,7 @@ public class NewTaskFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         //createAlarmViewModel = ViewModelProviders.of(this).get(CreateAlarmViewModel.class);
     }
 
@@ -52,8 +54,19 @@ public class NewTaskFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.newtask, container, false);
+        TimePicker timePicker = (TimePicker)view.findViewById(R.id.fragment_createalarm_timePicker);
+        EditText title = (EditText)view.findViewById(R.id.fragment_createalarm_title);
+        Button scheduleAlarm = (Button)view.findViewById(R.id.fragment_createalarm_scheduleAlarm);
+        recurring = (CheckBox) view.findViewById(R.id.fragment_createalarm_recurring );
+        mon = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkMon );
+        tue = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkTue );
+        wed = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkWed );
+        thu = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkThu );
+        fri = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkFri );
+         sat = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSat );
+         sun = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSun );
+         recurringOptions = (LinearLayout) view.findViewById(R.id.fragment_createalarm_recurring_options );
 
-        //ButterKnife.bind(this, view);
 
         recurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -96,7 +109,7 @@ public class NewTaskFragment extends Fragment {
                 sun.isChecked()
         );
 
-        createAlarmViewModel.insert(alarm);
+        AlarmDatabase.insert(alarm);
 
         alarm.schedule(getContext());
     }
