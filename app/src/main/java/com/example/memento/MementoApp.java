@@ -4,6 +4,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.google.firebase.FirebaseApp;
+
 public class MementoApp extends Application {         //s'exécute avant toutes les activités et services de l'application, nécessaire pour la notification d'alarme
         public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
 
@@ -12,6 +14,7 @@ public class MementoApp extends Application {         //s'exécute avant toutes 
             super.onCreate();
 
             createNotificationChannnel();
+
         }
 
         private void createNotificationChannnel() {
@@ -27,4 +30,4 @@ public class MementoApp extends Application {         //s'exécute avant toutes 
             }
         }
     }
-}
+

@@ -29,7 +29,6 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
         alarmsRecyclerView = view.findViewById(R.id.fragment_listalarms_recylerView);
         alarmsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         alarmsRecyclerView.setAdapter(alarmRecyclerViewAdapter);
-        this.configureOnClickRecyclerView();
 
         addAlarm = view.findViewById(R.id.fragment_listalarms_addAlarm);
         addAlarm.setOnClickListener(new View.OnClickListener() {
@@ -41,22 +40,14 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
 
         return view;
     }
-    private void configureOnClickRecyclerView(){
-        ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : "+position);
-                    }
-                });
-    }
+
     public void onToggle(Alarm alarm) {
         if (alarm.isStarted()) {
             alarm.cancelAlarm(getContext());
-            AlarmDatabase.update(alarm);
+           // AlarmDatabase.update(alarm);
         } else {
             alarm.schedule(getContext());
-            AlarmDatabase.update(alarm);
+            //AlarmDatabase.update(alarm);
         }
     }
 }

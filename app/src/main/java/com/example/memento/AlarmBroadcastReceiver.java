@@ -74,9 +74,9 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void RecreateAlarm(Context context) {
-        Intent intentService = new Intent(context, RecreateService.class);
+        Intent intentService = new Intent(context, RingService.class);
         context.startService(intentService);
 
     }
 }
-}
+

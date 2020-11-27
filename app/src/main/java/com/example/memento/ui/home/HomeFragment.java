@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,10 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.memento.Alarm;
+import com.example.memento.AlarmDatabase;
 import com.example.memento.R;
 
-public class HomeFragment extends Fragment {
+import java.io.IOException;
 
+public class HomeFragment extends Fragment {
+    Button add;
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -30,6 +36,11 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+
+
+
+
         return root;
     }
 }

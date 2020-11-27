@@ -114,4 +114,3 @@ public class NewTaskFragment extends Fragment {
         alarm.schedule(getContext());
     }
 }
-}
