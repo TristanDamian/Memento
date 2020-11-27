@@ -125,7 +125,7 @@ public class Alarm {
         this.minute = 0;
         this.started = true;
 
-        this.recurring = false;
+        this.recurring = true;
 
         this.monday = false;
         this.tuesday = false;
@@ -135,7 +135,7 @@ public class Alarm {
         this.saturday =false;
         this.sunday = false;
 
-        this.title = title;
+        this.title = "test";
     }
     public void schedule(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

@@ -37,12 +37,12 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
         FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<Alarm, AlarmViewHolder>(options) {
             @Override
             public void onBindViewHolder(AlarmViewHolder holder, int position, Alarm model) {
-
+                holder.bind(model);
             }
 
             @Override
             public AlarmViewHolder onCreateViewHolder(ViewGroup group, int i) {
-                // Using a custom layout called R.layout.message for each item, we create a new instance of the viewholder
+
                 View view = LayoutInflater.from(group.getContext())
                         .inflate(R.layout.item_alarm, group, false);
 
