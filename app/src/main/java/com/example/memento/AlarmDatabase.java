@@ -56,7 +56,7 @@ public class AlarmDatabase {
         docData.put("minute",alarm.getMinute());
         docData.put("recurring",alarm.isRecurring());
         docData.put("started",!alarm.isStarted());
-        docData.put("title","alarm.getTitle())");
+        docData.put("title",alarm.getTitle());
         docData.put("friday",alarm.isFriday());
         docData.put("monday",alarm.isMonday());
         docData.put("tuesday",alarm.isTuesday());
@@ -70,6 +70,10 @@ public class AlarmDatabase {
 
     public static void delete(Alarm alarm){
         String test=Integer.toString(alarm.getAlarmId());
+        Database.collection("Alarms").document(test).delete();
+    }
+    public static void deleteWithID(int ID){
+        String test=Integer.toString(ID);
         Database.collection("Alarms").document(test).delete();
     }
 }

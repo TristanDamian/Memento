@@ -203,7 +203,7 @@ public class Alarm {
         intent.putExtra("FRIDAY", friday);
         intent.putExtra("SATURDAY", saturday);
         intent.putExtra("SUNDAY", sunday);
-
+        intent.putExtra("ID",this.alarmId);
         intent.putExtra("TITLE", title);
 
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0);

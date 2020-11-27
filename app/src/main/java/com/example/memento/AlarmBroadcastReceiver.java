@@ -72,6 +72,10 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     private void startRingService(Context context, Intent intent) {
         Intent intentService = new Intent(context, RingService.class);
+        int id=intent.getIntExtra("ID",0);
+        boolean recurring=intent.getBooleanExtra("RECURRING",true);
+        intentService.putExtra("ID",id);
+        intentService.putExtra("RECURRING",recurring);
         intentService.putExtra("TITLE", intent.getStringExtra("TITLE"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intentService);

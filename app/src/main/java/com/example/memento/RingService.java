@@ -6,6 +6,7 @@ import android.app.Service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.os.Vibrator;
@@ -23,7 +24,8 @@ public class RingService extends Service {
         @Override
         public void onCreate() {
             super.onCreate();
-
+            AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setStreamVolume (AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
             mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
             mediaPlayer.setLooping(true);
 
@@ -34,6 +36,10 @@ public class RingService extends Service {
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
             Intent notificationIntent = new Intent(this, RingActivity.class);
+            int id=intent.getIntExtra("ID",0);
+            boolean recurring=intent.getBooleanExtra("RECURRING",true);
+            notificationIntent.putExtra("ID",id);
+            notificationIntent.putExtra("RECURRING",recurring);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
             String alarmTitle = String.format("%s Alarm", intent.getStringExtra("TITLE"));
