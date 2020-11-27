@@ -97,24 +97,13 @@ public class AlarmListFragment  extends Fragment implements OnCheckAlarmListener
     }
 
     public void onDelete(Alarm alarm) {
-        if (alarm.isStarted()) {
-            alarm.cancelAlarm(getContext());
             try {
                 AlarmDatabase manager= new AlarmDatabase();
-                manager.done(alarm);
+                manager.delete(alarm);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        } else {
-            alarm.schedule(getContext());
-            try {
-                AlarmDatabase manager= new AlarmDatabase();
-                manager.done(alarm);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override

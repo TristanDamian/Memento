@@ -67,4 +67,9 @@ public class AlarmDatabase {
         String test=Integer.toString(alarm.getAlarmId());
         Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
     }
+
+    public static void delete(Alarm alarm){
+        String test=Integer.toString(alarm.getAlarmId());
+        Database.collection("Alarms").document(test).delete();
+    }
 }
