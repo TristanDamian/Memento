@@ -47,6 +47,24 @@ public class AlarmDatabase {
         docData.put("thursday",alarm.isThursday());
         docData.put("saturday",alarm.isSaturday());
         docData.put("sunday",alarm.isSunday());
-        Database.collection("Alarms").add(docData);
+        String test=Integer.toString(alarm.getAlarmId());
+        Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
+    }
+    public static void done(Alarm alarm){
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("hour",alarm.getHour());
+        docData.put("minute",alarm.getMinute());
+        docData.put("recurring",alarm.isRecurring());
+        docData.put("started",!alarm.isStarted());
+        docData.put("title","alarm.getTitle())");
+        docData.put("friday",alarm.isFriday());
+        docData.put("monday",alarm.isMonday());
+        docData.put("tuesday",alarm.isTuesday());
+        docData.put("wednesday",alarm.isWednesday());
+        docData.put("thursday",alarm.isThursday());
+        docData.put("saturday",alarm.isSaturday());
+        docData.put("sunday",alarm.isSunday());
+        String test=Integer.toString(alarm.getAlarmId());
+        Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
     }
 }

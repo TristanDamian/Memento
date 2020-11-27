@@ -12,7 +12,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
     private TextView alarmRecurringDays;
     private TextView alarmTitle;
 
-    Switch alarmStarted;
+    CheckBox alarmStarted;
 
     public AlarmViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,7 +24,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
         alarmTitle = itemView.findViewById(R.id.item_alarm_title);
     }
 
-    public void bind(final Alarm alarm/*, final OnToggleAlarmListener listener*/) {
+    public void bind(final Alarm alarm, final OnCheckAlarmListener listener) {
         String alarmText = String.format("%02d:%02d", alarm.getHour(), alarm.getMinute());
 
         alarmTime.setText(alarmText);
@@ -47,7 +47,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
         alarmStarted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //listener.onToggle(alarm);
+                listener.onCheck(alarm);
             }
         });
     }

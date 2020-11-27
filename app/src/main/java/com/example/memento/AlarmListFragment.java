@@ -15,15 +15,17 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class AlarmListFragment  extends Fragment implements OnToggleAlarmListener{
+import java.io.IOException;
+
+public class AlarmListFragment  extends Fragment implements OnCheckAlarmListener{
     private FirestoreRecyclerAdapter alarmRecyclerViewAdapter;
     private RecyclerView alarmsRecyclerView;
     private Button addAlarm;
-
+    public OnCheckAlarmListener listener;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        listener=this;
        // alarmRecyclerViewAdapter = new AlarmRecyclerViewAdapter(this);
     }
     @Nullable
@@ -37,7 +39,8 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
         FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<Alarm, AlarmViewHolder>(options) {
             @Override
             public void onBindViewHolder(AlarmViewHolder holder, int position, Alarm model) {
-                holder.bind(model);
+                model.setAlarmId( Integer.parseInt(getSnapshots().getSnapshot(position).getReference().getId()));
+                holder.bind(model,listener);
             }
 
             @Override
@@ -47,6 +50,10 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
                         .inflate(R.layout.item_alarm, group, false);
 
                 return new AlarmViewHolder(view);
+
+            }
+            public void deleteItem(int position){
+                getSnapshots().getSnapshot(position).getReference().delete();
             }
         };
 //Final step, where "mRecyclerView" is defined in your xml layout as
@@ -68,15 +75,48 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
         return view;
     }
 
-    public void onToggle(Alarm alarm) {
+    public void onCheck(Alarm alarm) {
         if (alarm.isStarted()) {
             alarm.cancelAlarm(getContext());
-           // AlarmDatabase.update(alarm);
+            try {
+                AlarmDatabase manager= new AlarmDatabase();
+                manager.done(alarm);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
             alarm.schedule(getContext());
-            //AlarmDatabase.update(alarm);
+            try {
+                AlarmDatabase manager= new AlarmDatabase();
+                manager.done(alarm);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+    public void onDelete(Alarm alarm) {
+        if (alarm.isStarted()) {
+            alarm.cancelAlarm(getContext());
+            try {
+                AlarmDatabase manager= new AlarmDatabase();
+                manager.done(alarm);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            alarm.schedule(getContext());
+            try {
+                AlarmDatabase manager= new AlarmDatabase();
+                manager.done(alarm);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();

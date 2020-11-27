@@ -50,7 +50,7 @@
 
             </LinearLayout>
 
-            <Switch
+            <CheckBox
                 android:id="@+id/item_alarm_started"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

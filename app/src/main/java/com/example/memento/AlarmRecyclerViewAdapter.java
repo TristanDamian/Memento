@@ -10,9 +10,9 @@ import java.util.List;
 
 public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
     private List<Alarm> alarms;
-    private OnToggleAlarmListener listener;
+    private OnCheckAlarmListener listener;
 
-    public AlarmRecyclerViewAdapter(OnToggleAlarmListener listener) {
+    public AlarmRecyclerViewAdapter(OnCheckAlarmListener listener) {
         this.alarms = new ArrayList<Alarm>();
         this.listener = listener;
     }
@@ -27,7 +27,7 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         Alarm alarm = alarms.get(position);
-        holder.bind(alarm/*, listener*/);
+        holder.bind(alarm, listener);
     }
 
     @Override
