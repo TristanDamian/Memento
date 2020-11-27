@@ -35,6 +35,10 @@ public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHold
         return alarms.size();
     }
 
+    public Alarm getItem(int pos){
+        return alarms.get(pos);
+    }
+
     @Override
     public void onViewRecycled(@NonNull AlarmViewHolder holder) {
         super.onViewRecycled(holder);

@@ -1,6 +1,7 @@
 package com.example.memento;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
@@ -12,6 +13,11 @@ import androidx.recyclerview.widget.*;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -19,6 +25,7 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
     private FirestoreRecyclerAdapter alarmRecyclerViewAdapter;
     private RecyclerView alarmsRecyclerView;
     private Button addAlarm;
+    private Button delAlarm;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +72,8 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
             }
         });
 
+        delAlarm = view.findViewById(R.id.fragment_listalarms_delAlarm);
+
         return view;
     }
 
@@ -81,10 +90,40 @@ public class AlarmListFragment  extends Fragment implements OnToggleAlarmListene
     public void onStart() {
         super.onStart();
         alarmRecyclerViewAdapter.startListening();
+
     }
     @Override
     public void onStop() {
         super.onStop();
         alarmRecyclerViewAdapter.stopListening();
     }
-}
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            Alarm alarmTemp = (Alarm)alarmRecyclerViewAdapter.getItem(viewHolder.getAdapterPosition());
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            com.google.firebase.database.Query alarmQuery = ref.orderByChild("title").equalTo(alarmTemp.getTitle());
+            alarmQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot alarmSnapshot : snapshot.getChildren()) {
+                        alarmSnapshot.getRef().removeValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                };
+            });
+        }
+    };
+    }
+

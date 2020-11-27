@@ -1,5 +1,7 @@
 package com.example.memento;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.*;
 import android.widget.*;
 
@@ -11,6 +13,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
     private ImageView alarmRecurring;
     private TextView alarmRecurringDays;
     private TextView alarmTitle;
+    private Alarm alarmT;
 
     Switch alarmStarted;
 
@@ -27,6 +30,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
     public void bind(final Alarm alarm/*, final OnToggleAlarmListener listener*/) {
         String alarmText = String.format("%02d:%02d", alarm.getHour(), alarm.getMinute());
 
+        alarmT = alarm;
         alarmTime.setText(alarmText);
         alarmStarted.setChecked(alarm.isStarted());
 
@@ -50,6 +54,10 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
                 //listener.onToggle(alarm);
             }
         });
+    }
+
+    public Alarm getAlarm(){
+        return alarmT;
     }
 }
 
