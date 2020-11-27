@@ -234,6 +234,8 @@ public class Alarm {
                     calendar.getTimeInMillis(),
                     alarmPendingIntent
             );
+            Toast.makeText(context, "SCHEDULE", Toast.LENGTH_SHORT).show();
+            System.out.println("/n/n/nSHEDULE/n/n/n");
         } else {
 
             String toastText = String.format("Recurring Alarm %s scheduled for %s at %02d:%02d", title,this.getAlarmDays(), hour, minute, alarmId);
@@ -246,6 +248,8 @@ public class Alarm {
                     RUN_DAILY,
                     alarmPendingIntent
             );
+            Toast.makeText(context, "SCHEDULE", Toast.LENGTH_SHORT).show();
+            System.out.println("/n/n/nSHEDULE/n/n/n");
         }
 
         this.started = true;

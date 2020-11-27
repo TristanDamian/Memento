@@ -114,8 +114,9 @@ public class NewTaskFragment extends Fragment {
                 sun.isChecked()
         );
         AlarmDatabase manager=new AlarmDatabase();
+        alarm.schedule(getContext());
         manager.insert(alarm);
 
-        alarm.schedule(getContext());
+
     }
 }

@@ -45,7 +45,7 @@ public class AlarmDatabase {
         docData.put("tuesday",alarm.isTuesday());
         docData.put("wednesday",alarm.isWednesday());
         docData.put("thursday",alarm.isThursday());
-        docData.put("satday",alarm.isSaturday());
+        docData.put("saturday",alarm.isSaturday());
         docData.put("sunday",alarm.isSunday());
         Database.collection("Alarms").add(docData);
     }

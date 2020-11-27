@@ -3,6 +3,7 @@ package com.example.memento;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -10,7 +11,10 @@ import java.util.Calendar;
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "TOAST", Toast.LENGTH_SHORT).show();
+        System.out.println(intent);
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+
             String toastText = String.format("Alarm Reboot");
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             RecreateAlarm(context);             //L'appareil a redémarré, on doit recréer les alarmes à partir de la base de données
@@ -69,7 +73,9 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     private void startRingService(Context context, Intent intent) {
         Intent intentService = new Intent(context, RingService.class);
         intentService.putExtra("TITLE", intent.getStringExtra("TITLE"));
-        context.startService(intentService);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intentService);
+        }
 
     }
 
