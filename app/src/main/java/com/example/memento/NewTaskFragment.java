@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -54,16 +55,16 @@ public class NewTaskFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.newtask, container, false);
-        TimePicker timePicker = (TimePicker)view.findViewById(R.id.fragment_createalarm_timePicker);
-        EditText title = (EditText)view.findViewById(R.id.fragment_createalarm_title);
-        Button scheduleAlarm = (Button)view.findViewById(R.id.fragment_createalarm_scheduleAlarm);
+         timePicker = (TimePicker)view.findViewById(R.id.fragment_createalarm_timePicker);
+         title = (EditText)view.findViewById(R.id.fragment_createalarm_title);
+        scheduleAlarm = (Button)view.findViewById(R.id.fragment_createalarm_scheduleAlarm);
         recurring = (CheckBox) view.findViewById(R.id.fragment_createalarm_recurring );
         mon = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkMon );
         tue = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkTue );
         wed = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkWed );
         thu = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkThu );
         fri = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkFri );
-         sat = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSat );
+        sat = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSat );
          sun = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSun );
          recurringOptions = (LinearLayout) view.findViewById(R.id.fragment_createalarm_recurring_options );
 
@@ -82,7 +83,11 @@ public class NewTaskFragment extends Fragment {
         scheduleAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scheduleAlarm();
+                try {
+                    scheduleAlarm();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Navigation.findNavController(v).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
             }
         });
@@ -90,7 +95,7 @@ public class NewTaskFragment extends Fragment {
         return view;
     }
 
-    private void scheduleAlarm() {
+    private void scheduleAlarm() throws IOException {
         int alarmId = new Random().nextInt(Integer.MAX_VALUE);
 
         Alarm alarm = new Alarm(
@@ -108,8 +113,8 @@ public class NewTaskFragment extends Fragment {
                 sat.isChecked(),
                 sun.isChecked()
         );
-
-        //AlarmDatabase.insert(alarm);
+        AlarmDatabase manager=new AlarmDatabase();
+        manager.insert(alarm);
 
         alarm.schedule(getContext());
     }

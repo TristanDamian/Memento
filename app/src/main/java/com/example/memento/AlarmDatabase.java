@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class AlarmDatabase {
     FirebaseApp App;
-    FirebaseFirestore Database;
+    static FirebaseFirestore Database;
     public AlarmDatabase() throws IOException {
         /*FileInputStream serviceAccount =
                 new FileInputStream("memento-cc796-firebase-adminsdk-nzn86-4c8adca17a.json");
@@ -33,7 +33,7 @@ public class AlarmDatabase {
 
         Database=FirebaseFirestore.getInstance();
     }
-    public void insert(Alarm alarm){
+    public static void insert(Alarm alarm){
         Map<String, Object> docData = new HashMap<>();
         docData.put("hour",alarm.getHour());
         docData.put("minute",alarm.getMinute());
@@ -47,6 +47,6 @@ public class AlarmDatabase {
         docData.put("thursday",alarm.isThursday());
         docData.put("satday",alarm.isSaturday());
         docData.put("sunday",alarm.isSunday());
-        Database.collection("Alarms").document("1").set(docData);
+        Database.collection("Alarms").add(docData);
     }
 }

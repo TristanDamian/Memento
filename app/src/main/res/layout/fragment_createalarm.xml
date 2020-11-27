@@ -111,15 +111,16 @@
                 android:text="Sun" />
 
         </LinearLayout>
-
         <Button
             android:id="@+id/fragment_createalarm_scheduleAlarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="32dp"
             android:text="Schedule Alarm"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="133dp" />
+            app:layout_constraintTop_toTopOf="@+id/fragment_createalarm_recurring"
+            tools:layout_editor_absoluteX="0dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
