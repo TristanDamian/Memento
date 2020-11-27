@@ -59,6 +59,8 @@ public class AlarmListFragment  extends Fragment implements OnCheckAlarmListener
         alarmsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         alarmsRecyclerView.setAdapter(alarmRecyclerViewAdapter);    //fin de l'initialisation de la RecyclerView
 
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(alarmsRecyclerView);
+
         addAlarm = view.findViewById(R.id.fragment_listalarms_addAlarm);    //navigation vers l'écran d'ajout d'alarme quand on click sur 'addAlarm'
         addAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,4 +113,19 @@ public class AlarmListFragment  extends Fragment implements OnCheckAlarmListener
         super.onStop();
         alarmRecyclerViewAdapter.stopListening();
     }
+
+    //Possibilité de slide les alarms vers la droite pour les supprimer
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            onDelete((Alarm)alarmRecyclerViewAdapter.getItem(viewHolder.getAdapterPosition()));
+            alarmRecyclerViewAdapter.notifyDataSetChanged();
+        }
+    };
 }

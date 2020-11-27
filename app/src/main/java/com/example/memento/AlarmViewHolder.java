@@ -11,7 +11,6 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder 
     private ImageView alarmRecurring;
     private TextView alarmRecurringDays;
     private TextView alarmTitle;
-    private Button alarmDelete;
     CheckBox alarmStarted;
 
     public AlarmViewHolder(@NonNull View itemView) {
@@ -22,7 +21,6 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder 
         alarmRecurring = itemView.findViewById(R.id.item_alarm_recurring);
         alarmRecurringDays = itemView.findViewById(R.id.item_alarm_recurringDays);
         alarmTitle = itemView.findViewById(R.id.item_alarm_title);
-        alarmDelete= itemView.findViewById(R.id.item_alarm_delete);
     }
 
     public void bind(final Alarm alarm, final OnCheckAlarmListener listener) {  //associe l'alarm et le ViewHolder
@@ -45,12 +43,6 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder 
             alarmTitle.setText("My alarm");
         }
 
-        alarmDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onDelete(alarm);
-            }
-        });   //associe le bouton à la fonction onDelete, pour supprimer l'alarm associée de la base de données
 
         alarmStarted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
