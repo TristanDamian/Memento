@@ -8,31 +8,31 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class AlarmBroadcastReceiver extends BroadcastReceiver {
+public class AlarmBroadcastReceiver extends BroadcastReceiver {   //traite les broadcasts de l'application, en particulier ceux liés à une alarme
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, "TOAST", Toast.LENGTH_SHORT).show();
         System.out.println(intent);
-        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {  //L'appareil a redémarré, on doit recréer les alarmes à partir de la base de données
 
             String toastText = String.format("Alarm Reboot");
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
-            RecreateAlarm(context);             //L'appareil a redémarré, on doit recréer les alarmes à partir de la base de données
+            RecreateAlarm(context);
         }
         else {
-            String toastText = String.format("Alarm Received");
+            String toastText = String.format("Alarm Received");       //sinon, on lance RingService qui va s'occupper de démarrer l'alarme
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             if (!intent.getBooleanExtra("RECURRING", false)) {
                 startRingService(context, intent);
             } {
-                if (alarmIsToday(intent)) {
+                if (alarmIsToday(intent)) {        //si l'alarme se répète, on vérifie qu'elle doit se lancer aujourd'hui
                     startRingService(context, intent);
                 }
             }
         }
     }
 
-    private boolean alarmIsToday(Intent intent) {
+    private boolean alarmIsToday(Intent intent) {      //vérifie si l'alarme est pour aujourd'hui
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         int today = calendar.get(Calendar.DAY_OF_WEEK);
@@ -70,7 +70,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         return false;
     }
 
-    private void startRingService(Context context, Intent intent) {
+    private void startRingService(Context context, Intent intent) {       //démarre RingService pour la notification, la musique et les vibrations
         Intent intentService = new Intent(context, RingService.class);
         int id=intent.getIntExtra("ID",0);
         boolean recurring=intent.getBooleanExtra("RECURRING",true);

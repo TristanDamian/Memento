@@ -35,7 +35,7 @@ public class NewTaskFragment extends Fragment {
     CheckBox sat;
     CheckBox sun;
     LinearLayout recurringOptions;
-    // TODO: Rename parameter arguments, choose names that match
+
 
 
 
@@ -71,7 +71,7 @@ public class NewTaskFragment extends Fragment {
 
         recurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {   //afficher les jours de la semaine quand on click sur recurring
                 if (isChecked) {
                     recurringOptions.setVisibility(View.VISIBLE);
                 } else {
@@ -82,7 +82,7 @@ public class NewTaskFragment extends Fragment {
 
         scheduleAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {       //validation de la création de l'alarme
                 try {
                     scheduleAlarm();
                 } catch (IOException e) {
@@ -95,7 +95,7 @@ public class NewTaskFragment extends Fragment {
         return view;
     }
 
-    private void scheduleAlarm() throws IOException {
+    private void scheduleAlarm() throws IOException {        //lance la création de l'alarme dans la base de données et sa planification avec les données du formulaire
         int alarmId = new Random().nextInt(Integer.MAX_VALUE);
 
         Alarm alarm = new Alarm(

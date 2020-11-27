@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Random;
 
-public class RingActivity extends AppCompatActivity {
+public class RingActivity extends AppCompatActivity {  //gère l'alarme lorsqu'on click sur la notification
         Button dismiss;
         Button snooze;
         ImageView clock;
@@ -32,7 +32,7 @@ public class RingActivity extends AppCompatActivity {
             recurring=getIntent().getBooleanExtra("RECURRING",true);
             dismiss.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) {      //quand on click sur dismiss, l'alarme s'arrête
                     Intent intentService = new Intent(getApplicationContext(), RingService.class);
                     //Context essai= getApplicationContext();
 
@@ -46,14 +46,14 @@ public class RingActivity extends AppCompatActivity {
                     }
 
 
-                    getApplicationContext().stopService(intentService);
+                    getApplicationContext().stopService(intentService);  //on stoppe la sonnerie et on retourne à l'accueil
                     finish();
                 }
             });
 
             snooze.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) { //quand on click sur Snooze, l'alarme est planifiée à nouveau 10 minutes plus tard
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(System.currentTimeMillis());
                     calendar.add(Calendar.MINUTE, 10);
@@ -77,7 +77,7 @@ public class RingActivity extends AppCompatActivity {
                     alarm.schedule(getApplicationContext());
 
                     Intent intentService = new Intent(getApplicationContext(), RingService.class);
-                    getApplicationContext().stopService(intentService);
+                    getApplicationContext().stopService(intentService);     //on stoppe la sonnerie et on retourne à l'accueil
                     finish();
                 }
             });

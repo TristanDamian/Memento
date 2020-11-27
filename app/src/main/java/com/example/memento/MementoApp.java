@@ -13,13 +13,13 @@ public class MementoApp extends Application {         //s'exécute avant toutes 
         public void onCreate() {
             super.onCreate();
 
-            createNotificationChannnel();
+            createNotificationChannnel();      //on créé le NotificationChannel utilisé par l'application
 
         }
 
         private void createNotificationChannnel() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel serviceChannel = new NotificationChannel(
+                NotificationChannel serviceChannel = new NotificationChannel( //on réserve le NotificationChannel
                         CHANNEL_ID,
                         "Alarm Service Channel",
                         NotificationManager.IMPORTANCE_DEFAULT

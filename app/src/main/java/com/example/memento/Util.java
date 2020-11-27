@@ -2,8 +2,8 @@ package com.example.memento;
 
 import java.util.Calendar;
 
-public class Util {
-    public static final String toDay(int day) throws Exception {
+public class Util {     //contient certains traitements récurrents sur les données
+    public static final String toDay(int day) throws Exception {    //renvoie une String représentant un jour de la semaine en fonction  d'un int
         switch (day) {
             case Calendar.SUNDAY:
                 return "Sunday";

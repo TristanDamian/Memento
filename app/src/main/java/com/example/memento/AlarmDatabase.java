@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AlarmDatabase {
+public class AlarmDatabase {    //gère les accès à la base de données Firestore
     FirebaseApp App;
     static FirebaseFirestore Database;
     public AlarmDatabase() throws IOException {
@@ -31,9 +31,10 @@ public class AlarmDatabase {
         App=FirebaseApp.initializeApp(options);
         Database = FirebaseDatabase.getInstance(App);*/
 
-        Database=FirebaseFirestore.getInstance();
+        Database=FirebaseFirestore.getInstance();      //on récupère l'instance de FireStore
     }
-    public static void insert(Alarm alarm){
+
+    public static void insert(Alarm alarm){        // insère une alarme dans la base de données
         Map<String, Object> docData = new HashMap<>();
         docData.put("hour",alarm.getHour());
         docData.put("minute",alarm.getMinute());
@@ -50,7 +51,8 @@ public class AlarmDatabase {
         String test=Integer.toString(alarm.getAlarmId());
         Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
     }
-    public static void done(Alarm alarm){
+
+    public static void done(Alarm alarm){           // enregistre la modification de started dans la base de données
         Map<String, Object> docData = new HashMap<>();
         docData.put("hour",alarm.getHour());
         docData.put("minute",alarm.getMinute());
@@ -68,11 +70,12 @@ public class AlarmDatabase {
         Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
     }
 
-    public static void delete(Alarm alarm){
+    public static void delete(Alarm alarm){  // supprimme une alarme
         String test=Integer.toString(alarm.getAlarmId());
         Database.collection("Alarms").document(test).delete();
     }
-    public static void deleteWithID(int ID){
+
+    public static void deleteWithID(int ID){  //supprimme une alarme à partir
         String test=Integer.toString(ID);
         Database.collection("Alarms").document(test).delete();
     }

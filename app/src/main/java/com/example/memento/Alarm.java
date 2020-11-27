@@ -12,12 +12,12 @@ import java.util.Calendar;
 public class Alarm {
 
 
-    private int alarmId;
+    private int alarmId;   //identifiant de l'alarme
 
-    private int hour, minute;
-    private boolean started, recurring;
-    private boolean monday, tuesday, wednesday, thursday, friday, saturday, sunday;
-    private String title;
+    private int hour, minute;  //l'heure et la minute de déclenchement
+    private boolean started, recurring;   //indique si l'alarme est active et si elle se répète dans le temps
+    private boolean monday, tuesday, wednesday, thursday, friday, saturday, sunday;  //indique les jours de l'alarme si elle se répète
+    private String title;     //le titre de l'alarme à afficher
 
     public int getAlarmId() {
         return alarmId;
@@ -67,7 +67,7 @@ public class Alarm {
         return title;
     }
 
-    public String getAlarmDays() {
+    public String getAlarmDays() {    //récupérer une String représentant les jours de l'alarme pour l'affichage
         if (!recurring) {
             return null;
         }
@@ -191,7 +191,8 @@ public class Alarm {
 
         this.title = "test";
     }
-    public void schedule(Context context) {
+
+    public void schedule(Context context) {                //programme l'alarme avec AlarmManager
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
@@ -255,7 +256,7 @@ public class Alarm {
         this.started = true;
     }
 
-    public void cancelAlarm(Context context) {
+    public void cancelAlarm(Context context) {      //annule l'alarme avec AlarmMaanger
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0);

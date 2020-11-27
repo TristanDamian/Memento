@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import static com.example.memento.MementoApp.CHANNEL_ID;
 
-public class RingService extends Service {
+public class RingService extends Service {   //crée la notification lorsqu'on a reçu le broadcast correspondant à l'alarme
 
         private MediaPlayer mediaPlayer;
         private Vibrator vibrator;
@@ -27,9 +27,9 @@ public class RingService extends Service {
             AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
             audioManager.setStreamVolume (AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
             mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
-            mediaPlayer.setLooping(true);
+            mediaPlayer.setLooping(true);      //pour lire la sonnerie en boucle tant que le service n'est pas arrêté
 
-            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);  //vibration ant que le service n'est pas arrêté
 
         }
 
@@ -44,7 +44,7 @@ public class RingService extends Service {
 
             String alarmTitle = String.format("%s Alarm", intent.getStringExtra("TITLE"));
 
-            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID) //création de la notification
                     .setContentTitle(alarmTitle)
                     .setContentText("Ring Ring .. Ring Ring")
                     .setSmallIcon(R.drawable.alarm_clock)
@@ -56,13 +56,13 @@ public class RingService extends Service {
             long[] pattern = { 0, 100, 1000 };
             vibrator.vibrate(pattern, 0);
 
-            startForeground(1, notification);
+            startForeground(1, notification);  //lancement de la notification en mode Foreground
 
             return START_STICKY;
         }
 
         @Override
-        public void onDestroy() {
+        public void onDestroy() {  //arrête la sonnerie et les vibrations quand le service est détruit
             super.onDestroy();
 
             mediaPlayer.stop();

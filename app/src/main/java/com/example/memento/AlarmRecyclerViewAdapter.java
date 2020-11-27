@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+OBSOLÈTE
+Le RecyclerViewAdapter est initialisé directement dans AlarmListFragment
+ */
 public class AlarmRecyclerViewAdapter extends RecyclerView.Adapter<AlarmViewHolder> {
     private List<Alarm> alarms;
     private OnCheckAlarmListener listener;

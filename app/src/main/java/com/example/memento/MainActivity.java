@@ -21,11 +21,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this);      //on initialise la base de données FireStore
         setContentView(R.layout.activity_main);
         //BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
@@ -35,17 +33,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         //NavigationUI.setupWithNavController(navView, navController);
     }
-    /*public void onClick(View v) {
-        try {
-            AlarmDatabase manage = new AlarmDatabase();
-            //Alarm test = new Alarm(1, 17, 25, "Test", false, false, false, false, false, false, false, false, false);
-            //manage.insert(test);
-            Toast.makeText(this, "ALors ?", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Toast.makeText(this, "BOF ?", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
 
-    }*/
 
 }

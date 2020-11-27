@@ -6,7 +6,7 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.*;
 
-public class AlarmViewHolder extends RecyclerView.ViewHolder {
+public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder pour les alarmes de la liste
     private TextView alarmTime;
     private ImageView alarmRecurring;
     private TextView alarmRecurringDays;
@@ -25,7 +25,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
         alarmDelete= itemView.findViewById(R.id.item_alarm_delete);
     }
 
-    public void bind(final Alarm alarm, final OnCheckAlarmListener listener) {
+    public void bind(final Alarm alarm, final OnCheckAlarmListener listener) {  //associe l'alarm et le ViewHolder
         String alarmText = String.format("%02d:%02d", alarm.getHour(), alarm.getMinute());
 
         alarmTime.setText(alarmText);
@@ -50,7 +50,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 listener.onDelete(alarm);
             }
-        });
+        });   //associe le bouton à la fonction onDelete, pour supprimer l'alarm associée de la base de données
 
         alarmStarted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
