@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v) {
         try {
             AlarmDatabase manage = new AlarmDatabase();
-            Alarm test = new Alarm(1, 17, 25, "Test", false, false, false, false, false, false, false, false, false);
-            manage.insert(test);
+            //Alarm test = new Alarm(1, 17, 25, "Test", false, false, false, false, false, false, false, false, false);
+            //manage.insert(test);
             Toast.makeText(this, "ALors ?", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(this, "BOF ?", Toast.LENGTH_LONG).show();

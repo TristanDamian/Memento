@@ -119,6 +119,24 @@ public class Alarm {
         this.title = title;
     }
 
+    public Alarm(){
+        this.alarmId = 0;
+        this.hour = 0;
+        this.minute = 0;
+        this.started = true;
+
+        this.recurring = false;
+
+        this.monday = false;
+        this.tuesday = false;
+        this.wednesday = false;
+        this.thursday = false;
+        this.friday = false;
+        this.saturday =false;
+        this.sunday = false;
+
+        this.title = title;
+    }
     public void schedule(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
