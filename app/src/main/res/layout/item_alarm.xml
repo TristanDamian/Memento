@@ -57,6 +57,15 @@
                 android:checked="false"
                 android:layout_weight="1" />
 
+            <Button
+                android:id="@+id/item_alarm_stats"
+                style="@android:style/Widget.Material.Button.Small"
+                android:layout_width="9dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#EEEEEE"
+                android:text="Stats" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
