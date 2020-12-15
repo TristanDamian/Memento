@@ -7,27 +7,46 @@ import android.os.Build;
 import com.google.firebase.FirebaseApp;
 
 public class MementoApp extends Application {         //s'exécute avant toutes les activités et services de l'application, nécessaire pour la notification d'alarme
-        public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
+    public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
 
-        @Override
-        public void onCreate() {
-            super.onCreate();
+    private boolean offlineModeEnabled = false;
+    private String offlineUID = "";
 
-            createNotificationChannnel();      //on créé le NotificationChannel utilisé par l'application
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-        }
+        createNotificationChannnel();      //on créé le NotificationChannel utilisé par l'application
 
-        private void createNotificationChannnel() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel serviceChannel = new NotificationChannel( //on réserve le NotificationChannel
-                        CHANNEL_ID,
-                        "Alarm Service Channel",
-                        NotificationManager.IMPORTANCE_DEFAULT
-                );
+    }
 
-                NotificationManager manager = getSystemService(NotificationManager.class);
-                manager.createNotificationChannel(serviceChannel);
-            }
+    private void createNotificationChannnel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel( //on réserve le NotificationChannel
+                    CHANNEL_ID,
+                    "Alarm Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
         }
     }
+
+    public boolean getofflineModeEnabled() {
+        return offlineModeEnabled;
+    }
+
+    public void setofflineModeEnabled(boolean oL) {
+        this.offlineModeEnabled = oL;
+    }
+
+    public String getofflineUID() {
+        return offlineUID;
+    }
+
+    public void setofflineUID(String oLUID) {
+        this.offlineUID = oLUID;
+    }
+}
 

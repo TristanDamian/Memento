@@ -19,6 +19,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
@@ -27,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button registerUser;
     private EditText editFullName, editAge, editEmail, editPassword;
     private ProgressBar progressBar;
+
+    private static final String fileName = "UID.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,10 +131,29 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-
                                     if(task.isSuccessful()){
                                         Toast.makeText(RegisterActivity.this,"User has been registered successfully", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
+
+                                        FileOutputStream fos = null;
+                                        try {
+                                            fos = openFileOutput(fileName,MODE_PRIVATE);
+                                            fos.write(FirebaseAuth.getInstance().getCurrentUser().getUid().getBytes());
+                                            Toast.makeText(RegisterActivity.this,"saved to " +getFilesDir() + "/"+fileName, Toast.LENGTH_LONG).show();
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }finally{
+                                            if(fos != null){
+                                                try {
+                                                    fos.close();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }
+
                                         startActivity(new Intent(RegisterActivity.this,ConnexionActivity.class));
                                     }else{
                                         Toast.makeText(RegisterActivity.this,"Failed to register, try again", Toast.LENGTH_LONG).show();

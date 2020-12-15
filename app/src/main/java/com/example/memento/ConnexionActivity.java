@@ -16,16 +16,27 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.errorprone.annotations.ForOverride;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class ConnexionActivity extends Activity implements View.OnClickListener {
 
-    private TextView register, forgotPassword;
+    private TextView register, forgotPassword, offlineMode;
     private EditText editEmail, editPassword;
     private Button login;
+
+    private static final String fileName = "UID.txt";
+    private File file;
 
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
@@ -33,7 +44,12 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        FirebaseApp.initializeApp(this);
+
+        setContentView(R.layout.activity_connexion);
+
+        login = (Button) findViewById(R.id.login);
+        login.setOnClickListener(this);
 
         register = (TextView)findViewById(R.id.register);
         register.setOnClickListener(this);
@@ -41,8 +57,8 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
         forgotPassword = (TextView)findViewById(R.id.forgotPassword);
         forgotPassword.setOnClickListener(this);
 
-        login = (Button) findViewById(R.id.login);
-        login.setOnClickListener(this);
+        offlineMode = (TextView)findViewById(R.id.offlineMode);
+        offlineMode.setOnClickListener(this);
 
         editEmail = (EditText) findViewById(R.id.email);
         editPassword = (EditText) findViewById(R.id.password);
@@ -67,6 +83,46 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
 
             case R.id.forgotPassword:
                 startActivity(new Intent(this, ForgotPasswordActivity.class));
+                break;
+
+            case R.id.offlineMode:
+                file = new File(getFilesDir()+"/"+fileName);
+                if(file.exists()){
+                    ((MementoApp) this.getApplication()).setofflineModeEnabled(true);
+
+                    FileInputStream fis = null;
+                    try {
+                        fis = openFileInput(fileName);
+                        InputStreamReader isr = new InputStreamReader(fis);
+                        BufferedReader br = new BufferedReader(isr);
+                        StringBuilder sb = new StringBuilder();
+                        String userID;
+
+                        while((userID = br.readLine()) != null){
+                            sb.append(userID);
+                        }
+                        ((MementoApp) this.getApplication()).setofflineUID(sb.toString());
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        Toast.makeText(ConnexionActivity.this,"error", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }finally {
+                        if(fis != null){
+                            try {
+                                fis.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    startActivity(new Intent(this,MainActivity.class));
+                }else{
+                    offlineMode.setError("");
+                    offlineMode.requestFocus();
+                    Toast.makeText(ConnexionActivity.this,"Please register before using offline mode", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
@@ -109,7 +165,6 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    //Diriger vers la bonne page pour l'instant c'est main
                     startActivity(new Intent(ConnexionActivity.this,MainActivity.class));
                     progressBar.setVisibility(View.GONE);
                 }else{
