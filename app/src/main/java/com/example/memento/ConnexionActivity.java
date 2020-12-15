@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -165,6 +166,26 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
                 if(task.isSuccessful()){
                     singletonData data = singletonData.getInstance();
                     data.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    data.setOfflineModeEnabled(false);
+
+                    FileOutputStream fos = null;
+                    try {
+                        fos = openFileOutput(fileName,MODE_PRIVATE);
+                        fos.write(data.getUserID().getBytes());
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }finally{
+                        if(fos != null){
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
                     startActivity(new Intent(ConnexionActivity.this,MainActivity.class));
                     progressBar.setVisibility(View.GONE);
                 }else{
