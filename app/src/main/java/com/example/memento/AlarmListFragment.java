@@ -31,8 +31,9 @@ public class AlarmListFragment  extends Fragment implements OnCheckAlarmListener
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        singletonData data = singletonData.getInstance();
         Query query = FirebaseFirestore.getInstance()           //la requête pour récupérer les alarmes
-                .collection("Alarms").limit(50);
+                .collection("Alarms").whereEqualTo("UID",data.getUserID()).limit(50);
         FirestoreRecyclerOptions<Alarm> options = new FirestoreRecyclerOptions.Builder<Alarm>()
                 .setQuery(query, Alarm.class)
                 .build();

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Calendar;
 
 public class Alarm {
@@ -18,6 +20,7 @@ public class Alarm {
     private boolean started, recurring;   //indique si l'alarme est active et si elle se répète dans le temps
     private boolean monday, tuesday, wednesday, thursday, friday, saturday, sunday;  //indique les jours de l'alarme si elle se répète
     private String title;     //le titre de l'alarme à afficher
+    private String userID;   //ID de l'utilisateur
 
     public int getAlarmId() {
         return alarmId;
@@ -29,6 +32,10 @@ public class Alarm {
 
     public int getMinute() {
         return minute;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     public boolean isRecurring() {
@@ -150,6 +157,10 @@ public class Alarm {
         this.title = title;
     }
 
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
     boolean isStarted(){
         return started;
     }
@@ -171,6 +182,14 @@ public class Alarm {
         this.sunday = sunday;
 
         this.title = title;
+
+        singletonData offlineData = singletonData.getInstance();
+        if(offlineData.getOfflineModeEnabled() == true)
+        {
+            this.userID = offlineData.getUserID();
+        }else {
+            this.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
     }
 
     public Alarm(){
@@ -190,6 +209,14 @@ public class Alarm {
         this.sunday = false;
 
         this.title = "test";
+
+        singletonData offlineData = singletonData.getInstance();
+        if(offlineData.getOfflineModeEnabled() == true)
+        {
+            this.userID = offlineData.getUserID();
+        }else {
+            this.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
     }
 
     public void schedule(Context context) {                //programme l'alarme avec AlarmManager

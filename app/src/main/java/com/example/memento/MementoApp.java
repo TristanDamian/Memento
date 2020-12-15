@@ -9,9 +9,6 @@ import com.google.firebase.FirebaseApp;
 public class MementoApp extends Application {         //s'exécute avant toutes les activités et services de l'application, nécessaire pour la notification d'alarme
     public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
 
-    private boolean offlineModeEnabled = false;
-    private String offlineUID = "";
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,22 +28,6 @@ public class MementoApp extends Application {         //s'exécute avant toutes 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }
-    }
-
-    public boolean getofflineModeEnabled() {
-        return offlineModeEnabled;
-    }
-
-    public void setofflineModeEnabled(boolean oL) {
-        this.offlineModeEnabled = oL;
-    }
-
-    public String getofflineUID() {
-        return offlineUID;
-    }
-
-    public void setofflineUID(String oLUID) {
-        this.offlineUID = oLUID;
     }
 }
 

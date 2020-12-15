@@ -15,12 +15,9 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.errorprone.annotations.ForOverride;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -87,8 +84,9 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
 
             case R.id.offlineMode:
                 file = new File(getFilesDir()+"/"+fileName);
+                singletonData data = singletonData.getInstance();
                 if(file.exists()){
-                    ((MementoApp) this.getApplication()).setofflineModeEnabled(true);
+                    data.setOfflineModeEnabled(true);
 
                     FileInputStream fis = null;
                     try {
@@ -101,7 +99,7 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
                         while((userID = br.readLine()) != null){
                             sb.append(userID);
                         }
-                        ((MementoApp) this.getApplication()).setofflineUID(sb.toString());
+                        data.setUserID(sb.toString());
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -165,6 +163,8 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    singletonData data = singletonData.getInstance();
+                    data.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     startActivity(new Intent(ConnexionActivity.this,MainActivity.class));
                     progressBar.setVisibility(View.GONE);
                 }else{
