@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_alarmsListFragment_to_createAlarmFragment"
             app:destination="@id/createAlarmFragment" />
+        <action
+            android:id="@+id/action_alarmsListFragment_to_alarmStats"
+            app:destination="@id/alarmStatsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/createAlarmFragment"
@@ -21,5 +24,17 @@
         <action
             android:id="@+id/action_createAlarmFragment_to_alarmsListFragment"
             app:destination="@id/alarmsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmStatsFragment"
+        android:name="com.example.memento.AlarmStatsFragment"
+        android:label="Statistiques">
+        <argument
+            android:name="alarmID"
+            app:argType="integer"
+            android:defaultValue="0"/>
+        <action
+            android:id="@+id/action_alarmStats_to_alarmsListFragment"
+            app:destination="@id/alarmsListFragment"/>
     </fragment>
 </navigation>

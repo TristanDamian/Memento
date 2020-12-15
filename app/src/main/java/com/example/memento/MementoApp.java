@@ -6,7 +6,10 @@ import android.os.Build;
 
 import com.google.firebase.FirebaseApp;
 
+import java.util.List;
+
 public class MementoApp extends Application {         //s'exécute avant toutes les activités et services de l'application, nécessaire pour la notification d'alarme
+
     public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
 
     @Override

@@ -12,8 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Calendar;
 
 public class Alarm {
-
-
     private int alarmId;   //identifiant de l'alarme
 
     private int hour, minute;  //l'heure et la minute de déclenchement
