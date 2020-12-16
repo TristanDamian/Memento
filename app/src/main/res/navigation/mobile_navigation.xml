@@ -37,4 +37,18 @@
             android:id="@+id/action_alarmStats_to_alarmsListFragment"
             app:destination="@id/alarmsListFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.example.memento.ConvListFragment"
+        android:label="n"
+        tools:layout="@layout/fragment_listconv" />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.memento.AlarmListFragment"
+        android:label="n"
+        tools:layout="@layout/fragment_listalarms" >
+        <action
+            android:id="@+id/action_alarmsListFragment_to_createAlarmFragment"
+            app:destination="@id/createAlarmFragment" />
+    </fragment>
 </navigation>
