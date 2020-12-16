@@ -15,6 +15,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder 
     private TextView alarmTitle;
     CheckBox alarmStarted;
     Button alarmStats;
+    private TextView alarmTag;
 
     public AlarmViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +26,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder 
         alarmRecurringDays = itemView.findViewById(R.id.item_alarm_recurringDays);
         alarmTitle = itemView.findViewById(R.id.item_alarm_title);
         alarmStats = itemView.findViewById((R.id.item_alarm_stats));
+        alarmTag = (TextView)itemView.findViewById(R.id.item_alarm_tag);
     }
 
     public void bind(final Alarm alarm, final OnCheckAlarmListener listener) {  //associe l'alarm et le ViewHolder
@@ -46,6 +48,15 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {     //ViewHolder 
         } else {
             alarmTitle.setText("My alarm");
         }
+
+        if(alarm.isSport()){
+            alarmTag.setText("Sport");
+        }
+
+        if(alarm.isRelax()){
+            alarmTag.setText("Relaxation");
+        }
+
 
 
         alarmStarted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

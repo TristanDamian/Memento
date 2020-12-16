@@ -62,6 +62,8 @@ public class AlarmDatabase {    //gère les accès à la base de données Firest
         docData.put("saturday",alarm.isSaturday());
         docData.put("sunday",alarm.isSunday());
         docData.put("UID", alarm.getUserID());
+        docData.put("sport",alarm.isSport());
+        docData.put("relax",alarm.isRelax());
         String test=Integer.toString(alarm.getAlarmId());
         Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
         Database.collection("Stats").document(Integer.toString(alarm.getAlarmId()));
@@ -83,6 +85,8 @@ public class AlarmDatabase {    //gère les accès à la base de données Firest
         docData.put("saturday",alarm.isSaturday());
         docData.put("sunday",alarm.isSunday());
         docData.put("UID", alarm.getUserID());
+        docData.put("sport",alarm.isSport());
+        docData.put("relax",alarm.isRelax());
         final String test=Integer.toString(alarm.getAlarmId());
         Database.collection("Alarms").document(Integer.toString(alarm.getAlarmId())).set(docData);
 
