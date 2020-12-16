@@ -153,6 +153,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                 }
                                             }
                                         }
+                                        try {
+                                            AlarmDatabase manager=new AlarmDatabase();
+                                            manager.insertUser(user);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
 
                                         startActivity(new Intent(RegisterActivity.this,ConnexionActivity.class));
                                     }else{
