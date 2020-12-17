@@ -13,11 +13,11 @@ public class MessageDatabase {
 
     public static Task<DocumentReference> createMessageForChat(String textMessage, String chat, String userSender){
 
-        // 1 - Create the Message object
+        // 1 - On créé l'objet message
         Message message = new Message(textMessage, userSender);
         Date now=new Date();
         message.setDateCreated(now);
-        // 2 - Store Message to Firestore
+        // 2 - On le stock dans Firestore
         return ConversationDatabase.getAllConversation()
                 .document(chat)
                 .collection(COLLECTION_NAME)

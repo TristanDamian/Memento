@@ -46,7 +46,7 @@ public class ConvListFragment extends Fragment {
             public void onBindViewHolder(ConversationViewHolder holder, int position, Conversation model) {      // lie chaque Conversatione avec un viewHolder
                 //model.setConversationId( Integer.parseInt(getSnapshots().getSnapshot(position).getReference().getId()));
                 String convID = getSnapshots().getSnapshot(position).getId();
-                holder.bind(model);
+                holder.bind(model,convID);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

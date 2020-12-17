@@ -1,10 +1,13 @@
 package com.example.memento;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Conversation {
     private String lastMessage;
     private Date lastUpdate;
+    private Array Users;
 
     public Conversation() {
     }
@@ -29,4 +32,6 @@ public class Conversation {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+
 }

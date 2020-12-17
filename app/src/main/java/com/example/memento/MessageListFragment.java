@@ -62,29 +62,9 @@ public class MessageListFragment extends AppCompatActivity implements MessageAda
             }
         });
         this.configureRecyclerView(chat);
-       // this.configureToolbar();
-        this.getCurrentUserFromFirestore();
+
     }
 
-
-    /*@Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chat_layout, container, false);
-        currentChatName="4XtAK10cIzyk9NuyjkVF";
-        this.recyclerView=view.findViewById(R.id.activity_mentor_chat_recycler_view);
-        this.textViewRecyclerViewEmpty=view.findViewById(R.id.activity_mentor_chat_text_view_recycler_view_empty);
-        this.editTextMessage=view.findViewById(R.id.activity_mentor_chat_message_edit_text);
-        this.sendButton=view.findViewById(R.id.activity_mentor_chat_send_button);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSendMessage();
-            }
-        });
-        this.configureRecyclerView("4XtAK10cIzyk9NuyjkVF");
-        return view;
-    }*/
 
     String getCurrentUser(){
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -111,23 +91,6 @@ public class MessageListFragment extends AppCompatActivity implements MessageAda
         }
     }
 
-
-
-    @OnClick(R.id.activity_mentor_chat_add_file_button)
-    public void onClickAddFile() { }
-
-    // --------------------
-    // REST REQUESTS
-    // --------------------
-    // 4 - Get Current User from Firestore
-    private void getCurrentUserFromFirestore(){
-        /*UserInfoDatabase.getUser(getCurrentUser()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                modelCurrentUser = documentSnapshot.toObject(UserInfo.class);
-            }
-        });*/
-    }
 
     // --------------------
     // UI
