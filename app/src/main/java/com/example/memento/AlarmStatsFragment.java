@@ -74,7 +74,7 @@ public class AlarmStatsFragment extends Fragment{
         super.onCreate(savedInstanceState);
         alarmId = getArguments().getInt("alarmId");
 
-        FirebaseFirestore.getInstance().collection("Stats").document(alarmId.toString()).get().addOnCompleteListener(
+        FirebaseFirestore.getInstance().collection("Stats").document(alarmId.toString()).get().addOnCompleteListener( // Récupère les données serveur pour les afficher
                 new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -83,14 +83,14 @@ public class AlarmStatsFragment extends Fragment{
 
                             //Récupération des 20 dernières occurences pour le PieChart
                             last20 = (List<Boolean>) document.get("last20");
-                            System.out.println(last20);
-                            PieData pieData = createPieData();
-                            preparePieChartData(pieData);
+                            if(monthlyData != null){
+                                PieData pieData = createPieData();
+                                preparePieChartData(pieData);
+                            }
 
                             //Récupération des données mensuelles pour le BarChart
                             monthlyData = (List<Timestamp>) document.get("monthlyData");
                             if(monthlyData != null){
-                                System.out.println(monthlyData.get(0));
                                 BarData barData = createBarData();
                                 prepareBarChartData(barData);
                             }
@@ -104,6 +104,8 @@ public class AlarmStatsFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        // Récupère les élements du layout pour les afficher
+
         View view = inflater.inflate(R.layout.alarmstats, container, false);
         pieChart = view.findViewById(R.id.fragment_pieChart_chart);
         barChart = view.findViewById(R.id.fragment_barChart_chart);
@@ -114,9 +116,8 @@ public class AlarmStatsFragment extends Fragment{
     private BarData createBarData(){
         int[] dataCount = new int[12];
 
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-
         Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
 
         for(Integer i : dataCount){
             dataCount[i] = 0;
@@ -126,11 +127,9 @@ public class AlarmStatsFragment extends Fragment{
 
         for(Timestamp date : monthlyData){
             cal.setTimeInMillis(date.getSeconds()*1000);
-            if(cal.get(Calendar.YEAR) == year)
+            if(cal.get(Calendar.YEAR) == year) // Fait le tri parmi les données pour n'afficher que celles de l'année en cours
                 dataCount[date.toDate().getMonth()] += 1;
         }
-
-        System.out.println(dataCount.length);
 
         for(int i = 0; i < dataCount.length; i++){
             chartValues.add(new BarEntry(i, dataCount[i]));
@@ -154,12 +153,16 @@ public class AlarmStatsFragment extends Fragment{
         YAxis axisLeft = barChart.getAxisLeft();
         YAxis axisRight = barChart.getAxisRight();
 
+        // Ajoute les mois en axe X
+
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
                 return MONTHS[(int) value];
             }
         });
+
+        // Formatte les données affichées sur le graphe
 
         data.setValueFormatter(new ValueFormatter() {
             @Override
@@ -168,6 +171,8 @@ public class AlarmStatsFragment extends Fragment{
             }
         });
 
+        // Modifie les axes Y
+
         axisLeft.setAxisMinimum(0);
         axisLeft.setGranularity(5);
         axisLeft.setDrawLabels(false);
@@ -175,8 +180,12 @@ public class AlarmStatsFragment extends Fragment{
         axisRight.setDrawLabels(false);
         axisRight.setDrawGridLines(false);
 
+        // Modifie l'axe X
+
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1);
+
+        // Modifie l'aspect des barres
 
         barChart.setPinchZoom(true);
         barChart.setScaleYEnabled(false);
@@ -225,6 +234,9 @@ public class AlarmStatsFragment extends Fragment{
     }
 
     private void preparePieChartData(PieData data){
+
+        // Création du texte central
+
         String str1;
         String str2 = "de complétion parmi\nles 20 dernières fois";
 
@@ -240,8 +252,10 @@ public class AlarmStatsFragment extends Fragment{
         sb.setSpan(fcs1, 0, str1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         sb.setSpan(new RelativeSizeSpan(5f), 0, str1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         sb.setSpan(fcs2, str1.length(), str2.length()+str1.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        pieChart.setCenterText(sb);
 
+        // Modifie l'aspect du Pie Chart
+
+        pieChart.setCenterText(sb);
         pieChart.getLegend().setEnabled(false);
         pieChart.setData(data);
         pieChart.setUsePercentValues(true);
@@ -251,6 +265,7 @@ public class AlarmStatsFragment extends Fragment{
         pieChart.setExtraOffsets(10, 0, 10, 10);
         pieChart.setHoleRadius(75);
         pieChart.setTransparentCircleRadius(80);
+
         pieChart.invalidate();
     }
 }
