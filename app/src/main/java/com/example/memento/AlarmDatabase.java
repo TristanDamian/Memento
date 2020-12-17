@@ -152,10 +152,11 @@ public class AlarmDatabase {    //gère les accès à la base de données Firest
     public static void insertUser(User user){
         CollectionReference userInfo = Database.collection("UserInfo");
         Map<String, Object> userData = new HashMap<>();
-        userData.put("fullname",user.getFullName());
+        userData.put("fullname",user.getfullname());
         userData.put("age",user.getAge());
         userData.put("sport",false);
         userData.put("relax",false);
+        userData.put("UID",user.getuid());
         singletonData data = singletonData.getInstance();
         userInfo.document(data.getUserID()).set(userData);
     }

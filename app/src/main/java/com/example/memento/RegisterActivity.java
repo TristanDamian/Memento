@@ -75,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String age = editAge.getText().toString().trim();
         final String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
+        String UID = mAuth.getUid();
 
         if(fullName.isEmpty())
         {
@@ -124,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(fullName,age,email);
+                            User user = new User(fullName,age,email, UID);
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
