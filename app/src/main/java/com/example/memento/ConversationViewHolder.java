@@ -23,19 +23,19 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {     //View
     private TextView convLastMessage;
     private  TextView convLastUpdate;
     private TextView convUser;
-    //private CardView convCard;
+
     public ConversationViewHolder(@NonNull View itemView) {
         super(itemView);
 
        convLastMessage = itemView.findViewById(R.id.item_conv_last_message);
        convLastUpdate = itemView.findViewById(R.id.item_conv_last_update);
        convUser=itemView.findViewById(R.id.item_conv_user);
-        //convCard=itemView.findViewById(R.id.item_conv_card);
+
 
     }
 
 
-    public void bind(final Conversation conv, String convID) {  //associe l'Conversation et le ViewHolder
+    public void bind(final Conversation conv, String convID) {  //associe la Conversation et le ViewHolder
         SetUserName(convID);
         String ConversationText = conv.getLastMessage();
         DateFormat dateFormat = new SimpleDateFormat("hh:mm");
@@ -44,8 +44,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {     //View
         convLastMessage.setText(ConversationText);
     }
 
-    public void SetUserName(String convID){
-        DocumentReference currentConversation=ConversationDatabase.getConversation(convID);
+    public void SetUserName(String convID){   //accès à la base de données pour les infos sur l'utilisateur et modification de la vue
+        DocumentReference currentConversation=ConversationDatabase.getConversation(convID);  //on récupère la référence dans la base de données de cette conversation
         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         currentConversation.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -53,15 +53,15 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {     //View
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        List<String> participants = (List<String>)document.get("Users");
+                        List<String> participants = (List<String>)document.get("Users");   //on récupère les participants à la conversation
                         for(int i=0; i<participants.size();i++){
                             String user=participants.get(i);
-                            if(user!=currentUser){
+                            if(user!=currentUser){        //on garde l'ID de l'utilisateur qui n'est pas l'utilisateur actuel, pour afficher son interlocuteur à notre utilisateur
                                 Task<QuerySnapshot> snap=ConversationDatabase.getUserInfo(user).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                         if(queryDocumentSnapshots.getDocuments().size()>0){  //il peut arriver qu'on ait pas de UserInfo dans la database, même si le user existe
-                                            String userName= (String) queryDocumentSnapshots.getDocuments().get(0).get("fullname");
+                                            String userName= (String) queryDocumentSnapshots.getDocuments().get(0).get("fullname");  //on récupère le nom de l'interlocuteur
                                             convUser.setText(userName);
                                         }
                                     }

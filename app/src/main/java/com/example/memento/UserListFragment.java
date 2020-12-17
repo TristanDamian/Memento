@@ -25,25 +25,24 @@ public class UserListFragment extends Fragment {
     private Button addUser;
     private Button chat;
     private String UID;
-    //public OnCheckUserListener listener;                 //listener pour les click sur les éléments de la liste
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UID= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //listener=this;
-        // UserRecyclerViewAdapter = new UserRecyclerViewAdapter(this);
+
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Query query = FirebaseFirestore.getInstance()           //la requête pour récupérer les Useres
+        Query query = FirebaseFirestore.getInstance()           //la requête pour récupérer les Users
                 .collection("UserInfo").whereNotEqualTo("uid",UID).limit(50);
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
                 .build();
         FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<User, UserViewHolder>(options) {         //initialisation du FirestoreRecyclerAdapter
             @Override
-            public void onBindViewHolder(UserViewHolder holder, int position, User model) {      // lie chaque Usere avec un viewHolder
+            public void onBindViewHolder(UserViewHolder holder, int position, User model) {      // lie chaque User avec un viewHolder
 
                 String currentUser = getSnapshots().getSnapshot(position).getId();
                 holder.bind(model);

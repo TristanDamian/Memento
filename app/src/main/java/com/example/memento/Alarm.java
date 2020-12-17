@@ -16,15 +16,15 @@ public class Alarm {
 
     private int hour, minute;  //l'heure et la minute de déclenchement
     private boolean started, recurring;   //indique si l'alarme est active et si elle se répète dans le temps
-    private boolean monday;
+    private boolean monday;      //indique les jours de l'alarme si elle se répète
     private boolean tuesday;
     private boolean wednesday;
     private boolean thursday;
     private boolean friday;
     private boolean saturday;
     private boolean sunday;
-    private boolean sport;
-    private boolean relax;  //indique les jours de l'alarme si elle se répète
+    private boolean sport;  //si l'alarme contient le tag "sport" ou relax
+    private boolean relax;
     private String title;     //le titre de l'alarme à afficher
     private String userID;   //ID de l'utilisateur
 

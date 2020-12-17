@@ -15,7 +15,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder {     //ViewHolder p
     private TextView userRelax;
     private TextView userSport;
 
-    //private CardView userCard;
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
 
@@ -23,8 +22,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder {     //ViewHolder p
         userAge = itemView.findViewById(R.id.item_user_age);
         userRelax = itemView.findViewById(R.id.item_user_relax);
         userSport= itemView.findViewById(R.id.item_user_sport);
-        //userCard=itemView.findViewById(R.id.item_user_card);
-
     }
 
 
