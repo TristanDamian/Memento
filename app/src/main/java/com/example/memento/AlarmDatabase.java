@@ -105,7 +105,7 @@ public class AlarmDatabase {    //gère les accès à la base de données Firest
 
         final Map<String, Object> statsData = new HashMap<>();
 
-        Database.collection("Stats").document(test).get().addOnCompleteListener(
+        Database.collection("Stats").document(test).get().addOnCompleteListener( // Récupère les stats déjà présentes sur la database et les modifie, pour ensuite les sauvegarder
                 new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -113,19 +113,20 @@ public class AlarmDatabase {    //gère les accès à la base de données Firest
                             DocumentSnapshot document = task.getResult();
                             monthlyData = (List<Timestamp>) document.get("monthlyData");
 
-                            if(monthlyData == null)
+                            if(monthlyData == null) // Si il n'existe pas de données mensuelles, crée une liste
                                 monthlyData = new LinkedList<>();
 
                             last20 = (List<Boolean>) document.get("last20");
 
-                            if(last20 == null)
+                            if(last20 == null) // Si il n'existe pas de données sur les 20 dernières itérations, crée une liste
                                 last20 = new LinkedList<>();
 
                             Timestamp timestamp = new Timestamp(new Date());
                             monthlyData.add(timestamp);
 
                             last20.add(true);
-                            if(last20.size() > 20)
+
+                            if(last20.size() > 20) // Si la liste dépasse 20 booléens, réduit de 1
                                 last20.remove(0);
 
                             statsData.put("monthlyData", monthlyData);
