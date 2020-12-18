@@ -18,28 +18,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
-    //ROOT VIEW
     @BindView(R.id.activity_chat_item_root_view) RelativeLayout rootView;
 
-    //PROFILE CONTAINER
     @BindView(R.id.activity_chat_item_profile_container) LinearLayout profileContainer;
     @BindView(R.id.activity_chat_item_profile_container_profile_image) ImageView imageViewProfile;
 
-
-    //MESSAGE CONTAINER
     @BindView(R.id.activity_chat_item_message_container)
     RelativeLayout messageContainer;
-    //IMAGE SENDED CONTAINER
-    //@BindView(R.id.activity_chat_item_message_container_image_sent_cardview) CardView cardViewImageSent;
-    //@BindView(R.id.activity_chat_item_message_container_image_sent_cardview_image) ImageView imageViewSent;
-    //TEXT MESSAGE CONTAINER
+
     @BindView(R.id.activity_chat_item_message_container_text_message_container) LinearLayout textMessageContainer;
     @BindView(R.id.activity_chat_item_message_container_text_message_container_text_view) TextView textViewMessage;
-    //DATE TEXT
+
     @BindView(R.id.activity_chat_item_message_container_text_view_date) TextView textViewDate;
 
-
-    //FOR DATA
     private final int colorCurrentUser;
     private final int colorRemoteUser;
 
@@ -50,48 +41,33 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorSand);
     }
 
-    public void updateWithMessage(Message message, String currentUserId){
+    public void updateWithMessage(Message message, String currentUserId){  //pour le message qu'on veut afficher
+        Boolean isCurrentUser = message.getSender().equals(currentUserId);   // on vérifie si l'utilisateur connecté est l'émetteur
 
-        // Check if current user is the sender
-        Boolean isCurrentUser = message.getSender().equals(currentUserId);
-
-        // Update message TextView
         this.textViewMessage.setText(message.getMessage());
-        this.textViewMessage.setTextAlignment(isCurrentUser ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START);
+        this.textViewMessage.setTextAlignment(isCurrentUser ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START); //on décale le texte si le message vient de l'interlocuteur
 
-        // Update date TextView
-        if (message.getDate() != null) this.textViewDate.setText(this.convertDateToHour(message.getDate()));
-
+        if (message.getDate() != null) this.textViewDate.setText(this.convertDateToHour(message.getDate())); // on affiche l'heure du message
 
 
-        //Update Message Bubble Color Background
-        ((GradientDrawable) textMessageContainer.getBackground()).setColor(isCurrentUser ? colorCurrentUser : colorRemoteUser);
+        ((GradientDrawable) textMessageContainer.getBackground()).setColor(isCurrentUser ? colorCurrentUser : colorRemoteUser); //on change la couleur du message en fonction de l'émetteur
 
         // Update all views alignment depending is current user or not
         this.updateDesignDependingUser(isCurrentUser);
     }
 
-    private void updateDesignDependingUser(Boolean isSender){
+    private void updateDesignDependingUser(Boolean isSender){  //on change l'alignement des messages en fonction de l'utilisateur
 
-        // PROFILE CONTAINER
         RelativeLayout.LayoutParams paramsLayoutHeader = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         paramsLayoutHeader.addRule(isSender ? RelativeLayout.ALIGN_PARENT_RIGHT : RelativeLayout.ALIGN_PARENT_LEFT);
         this.profileContainer.setLayoutParams(paramsLayoutHeader);
 
-        // MESSAGE CONTAINER
         RelativeLayout.LayoutParams paramsLayoutContent = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         paramsLayoutContent.addRule(isSender ? RelativeLayout.LEFT_OF : RelativeLayout.RIGHT_OF, R.id.activity_chat_item_profile_container);
         this.messageContainer.setLayoutParams(paramsLayoutContent);
 
-        // CARDVIEW IMAGE SEND
-        //RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //paramsImageView.addRule(isSender ? RelativeLayout.ALIGN_LEFT : RelativeLayout.ALIGN_RIGHT, R.id.activity_chat_item_message_container_text_message_container);
-        //this.cardViewImageSent.setLayoutParams(paramsImageView);
-
         this.rootView.requestLayout();
     }
-
-    // ---
 
     private String convertDateToHour(Date date){
         DateFormat dfTime = new SimpleDateFormat("HH:mm");

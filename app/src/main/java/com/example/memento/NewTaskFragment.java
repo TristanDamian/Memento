@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -35,6 +36,8 @@ public class NewTaskFragment extends Fragment {
     CheckBox sat;
     CheckBox sun;
     LinearLayout recurringOptions;
+    RadioButton tag_Sport;
+    RadioButton tag_Relax;
 
 
 
@@ -66,6 +69,8 @@ public class NewTaskFragment extends Fragment {
         fri = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkFri );
         sat = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSat );
          sun = (CheckBox) view.findViewById(R.id.fragment_createalarm_checkSun );
+         tag_Sport = (RadioButton)view.findViewById(R.id.tag_sport);
+         tag_Relax = (RadioButton)view.findViewById(R.id.tag_relaxation);
          recurringOptions = (LinearLayout) view.findViewById(R.id.fragment_createalarm_recurring_options );
 
 
@@ -111,7 +116,9 @@ public class NewTaskFragment extends Fragment {
                 thu.isChecked(),
                 fri.isChecked(),
                 sat.isChecked(),
-                sun.isChecked()
+                sun.isChecked(),
+                tag_Sport.isChecked(),
+                tag_Relax.isChecked()
         );
         AlarmDatabase manager=new AlarmDatabase();
         alarm.schedule(getContext());

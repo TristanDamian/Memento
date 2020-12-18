@@ -6,10 +6,10 @@ import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
-public class Message {
-    private String message;
-    private Date date;
-    private String sender;
+public class Message {   //classe pour gérer les messages des conversation
+    private String message;  //texte du message
+    private Date date;     //date d'envoi
+    private String sender;  //identfifant de l'émetteur
 
 
     public Message() { }

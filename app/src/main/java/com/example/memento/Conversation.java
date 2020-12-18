@@ -1,10 +1,13 @@
 package com.example.memento;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Conversation {
-    private String lastMessage;
-    private Date lastUpdate;
+public class Conversation { //permet de récupérer les informations de base sur une conversation
+    private String lastMessage;  //le texte du dernier message envoyé, pour l'affihage
+    private Date lastUpdate;   //la date du dernier message, pour l'affichage
+
 
     public Conversation() {
     }
@@ -29,4 +32,6 @@ public class Conversation {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+
 }

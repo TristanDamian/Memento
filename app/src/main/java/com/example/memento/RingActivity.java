@@ -71,6 +71,8 @@ public class RingActivity extends AppCompatActivity {  //gère l'alarme lorsqu'o
                             false,
                             false,
                             false,
+                            false,
+                            false,
                             false
                     );
 

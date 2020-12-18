@@ -16,7 +16,15 @@ public class Alarm {
 
     private int hour, minute;  //l'heure et la minute de déclenchement
     private boolean started, recurring;   //indique si l'alarme est active et si elle se répète dans le temps
-    private boolean monday, tuesday, wednesday, thursday, friday, saturday, sunday;  //indique les jours de l'alarme si elle se répète
+    private boolean monday;      //indique les jours de l'alarme si elle se répète
+    private boolean tuesday;
+    private boolean wednesday;
+    private boolean thursday;
+    private boolean friday;
+    private boolean saturday;
+    private boolean sunday;
+    private boolean sport;  //si l'alarme contient le tag "sport" ou relax
+    private boolean relax;
     private String title;     //le titre de l'alarme à afficher
     private String userID;   //ID de l'utilisateur
 
@@ -67,6 +75,10 @@ public class Alarm {
     public boolean isSunday() {
         return sunday;
     }
+
+    public boolean isSport() { return sport; }
+
+    public boolean isRelax() { return relax; }
 
     public String getTitle() {
         return title;
@@ -159,11 +171,16 @@ public class Alarm {
         this.userID = userID;
     }
 
+    public void setSport(boolean sport) { this.sport = sport; }
+
+    public void setRelax(boolean relax) { this.relax = relax; }
+
+
     boolean isStarted(){
         return started;
     }
 
-    public Alarm(int alarmId, int hour, int minute, String title, boolean started, boolean recurring, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday) {
+    public Alarm(int alarmId, int hour, int minute, String title, boolean started, boolean recurring, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday, boolean sport, boolean relax) {
         this.alarmId = alarmId;
         this.hour = hour;
         this.minute = minute;
@@ -180,6 +197,9 @@ public class Alarm {
         this.sunday = sunday;
 
         this.title = title;
+
+        this.sport = sport;
+        this.relax = relax;
 
         singletonData offlineData = singletonData.getInstance();
         if(offlineData.getOfflineModeEnabled() == true)
@@ -207,6 +227,9 @@ public class Alarm {
         this.sunday = false;
 
         this.title = "test";
+
+        this.sport = false;
+        this.relax = false;
 
         singletonData offlineData = singletonData.getInstance();
         if(offlineData.getOfflineModeEnabled() == true)
