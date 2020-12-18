@@ -25,32 +25,31 @@ public class ConvListFragment extends Fragment {
     private Button addConversation;
     private Button chat;
     private String UID;
-    //public OnCheckConversationListener listener;                 //listener pour les click sur les éléments de la liste
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UID=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //listener=this;
-        // ConversationRecyclerViewAdapter = new ConversationRecyclerViewAdapter(this);
+
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Query query = FirebaseFirestore.getInstance()           //la requête pour récupérer les Conversationes
-                .collection("Conversation").whereArrayContains("Users",UID).limit(50);
+        Query query = FirebaseFirestore.getInstance()
+                .collection("Conversation").whereArrayContains("Users",UID).limit(50); //la requête pour récupérer les Conversations de notre utilisateur
         FirestoreRecyclerOptions<Conversation> options = new FirestoreRecyclerOptions.Builder<Conversation>()
                 .setQuery(query, Conversation.class)
                 .build();
+
         FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<Conversation, ConversationViewHolder>(options) {         //initialisation du FirestoreRecyclerAdapter
             @Override
             public void onBindViewHolder(ConversationViewHolder holder, int position, Conversation model) {      // lie chaque Conversatione avec un viewHolder
-                //model.setConversationId( Integer.parseInt(getSnapshots().getSnapshot(position).getReference().getId()));
+
                 String convID = getSnapshots().getSnapshot(position).getId();
-                holder.bind(model);
+                holder.bind(model,convID);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent chatIntent = new Intent(getContext(), MessageListFragment.class);
+                        Intent chatIntent = new Intent(getContext(), MessageListFragment.class);  //lance l'activité de la conversation quand on clique sur la conversation
                         chatIntent.putExtra("chat", convID);
                         startActivity(chatIntent);
                     }
@@ -58,7 +57,6 @@ public class ConvListFragment extends Fragment {
             }
             @Override
             public ConversationViewHolder onCreateViewHolder(ViewGroup group, int i) {         // créé les viewHolder
-
                 View view = LayoutInflater.from(group.getContext())
                         .inflate(R.layout.item_conv, group, false);
                 return new ConversationViewHolder(view);
@@ -71,8 +69,6 @@ public class ConvListFragment extends Fragment {
         ConversationsRecyclerView = view.findViewById(R.id.fragment_listconv_recylerView);
         ConversationsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ConversationsRecyclerView.setAdapter(ConversationRecyclerViewAdapter);    //fin de l'initialisation de la RecyclerView
-
-
         return view;
     }
 

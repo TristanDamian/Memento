@@ -43,6 +43,11 @@
         android:label="n"
         tools:layout="@layout/fragment_listconv" />
     <fragment
+        android:id="@+id/navigation_users"
+        android:name="com.example.memento.UserListFragment"
+        android:label="n"
+        tools:layout="@layout/fragment_listuser" />
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.memento.AlarmListFragment"
         android:label="n"

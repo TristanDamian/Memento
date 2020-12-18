@@ -30,28 +30,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);      //on initialise la base de données FireStore
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_chat)
-                .build();*/
 
-
+        BottomNavigationView navView = findViewById(R.id.nav_view); //on initialise la barre de navigation et on lui associe un contrôleur
         NavController navController = Navigation.findNavController(this, R.id.activity_main_nav_host_fragment);
         setupWithNavController(navView, navController);
-
-        /*setupWithNavController(navView, navController);
-        BottomNavigationItemView chat= navView.findViewById(R.id.navigation_chat);
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_alarmsListFragment_to_chat_Fragment);
-            }
-        });*/
-        // --------------------
-        // ERROR HANDLER
-        // --------------------
-
-
 
     }
 

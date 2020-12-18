@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -12,7 +13,7 @@
         app:cardElevation="6dp"
         android:layout_margin="8dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -20,53 +21,38 @@
 
             <TextView
                 android:id="@+id/item_conv_last_update"
-                android:layout_width="74dp"
+                android:layout_width="51dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="4dp"
                 android:text="00:00"
-                android:textSize="20sp" />
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/item_conv_user"
+                app:layout_constraintTop_toBottomOf="@+id/item_conv_last_message" />
 
             <TextView
                 android:id="@+id/item_conv_last_message"
-                android:layout_width="wrap_content"
+                android:layout_width="252dp"
                 android:layout_height="wrap_content"
                 android:text="Test"
-                android:textSize="36sp" />
-        </LinearLayout>
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="2dp">
+            <TextView
+                android:id="@+id/item_conv_user"
+                android:layout_width="128dp"
+                android:layout_height="43dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:text="User"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toStartOf="@+id/item_conv_last_message"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/item_alarm_recurringDays"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/item_alarm_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"/>
-
-            </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/item_alarm_started"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/item_alarm_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-
-                android:layout_weight="1" />-->
 
     </androidx.cardview.widget.CardView>
 

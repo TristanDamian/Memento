@@ -25,32 +25,22 @@ import butterknife.OnClick;
 
 public class MessageListFragment extends AppCompatActivity implements MessageAdapter.Listener {
 
-    // FOR DESIGN
-    // 1 - Getting all views needed
-    //@BindView(R.id.activity_mentor_chat_recycler_view) RecyclerView recyclerView;
-    //@BindView(R.id.activity_mentor_chat_text_view_recycler_view_empty)
+
     private TextView textViewRecyclerViewEmpty;
-    //@BindView(R.id.activity_mentor_chat_message_edit_text)
     private TextInputEditText editTextMessage;
     private Button sendButton;
     private RecyclerView recyclerView;
 
-    // FOR DATA
-    // 2 - Declaring Adapter and data
-    private MessageAdapter messageAdapter;
-    //@Nullable private UserInfo modelCurrentUser;
-    private String currentChatName;
 
-    // STATIC DATA FOR CHAT (3)
-    private static final String CHAT_NAME_ANDROID = "android";
-    private static final String CHAT_NAME_BUG = "bug";
-    private static final String CHAT_NAME_FIREBASE = "firebase";
+    private MessageAdapter messageAdapter;
+    private String currentChatName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_layout);
-        String chat=getIntent().getStringExtra("chat");
+        String chat=getIntent().getStringExtra("chat");   //on récupère l'identifiant de la conversation à afficher, fournis par ConversationViewHolder
+
         this.recyclerView=findViewById(R.id.activity_mentor_chat_recycler_view);
         this.textViewRecyclerViewEmpty=findViewById(R.id.activity_mentor_chat_text_view_recycler_view_empty);
         this.editTextMessage=findViewById(R.id.activity_mentor_chat_message_edit_text);
@@ -59,112 +49,57 @@ public class MessageListFragment extends AppCompatActivity implements MessageAda
             @Override
             public void onClick(View view) {
                 onClickSendMessage();
-            }
+            }  //on ajoute le click pour l'envoid de  messages
         });
         this.configureRecyclerView(chat);
-       // this.configureToolbar();
-        this.getCurrentUserFromFirestore();
+
     }
 
-
-    /*@Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chat_layout, container, false);
-        currentChatName="4XtAK10cIzyk9NuyjkVF";
-        this.recyclerView=view.findViewById(R.id.activity_mentor_chat_recycler_view);
-        this.textViewRecyclerViewEmpty=view.findViewById(R.id.activity_mentor_chat_text_view_recycler_view_empty);
-        this.editTextMessage=view.findViewById(R.id.activity_mentor_chat_message_edit_text);
-        this.sendButton=view.findViewById(R.id.activity_mentor_chat_send_button);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSendMessage();
-            }
-        });
-        this.configureRecyclerView("4XtAK10cIzyk9NuyjkVF");
-        return view;
-    }*/
 
     String getCurrentUser(){
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
-     public int getFragmentLayout() { return R.layout.chat_layout; }
+    } //pour récupérer l'utilisateur actuellement connecté
 
-    // --------------------
-    // ACTIONS
-    // --------------------
 
-    //@OnClick(R.id.activity_mentor_chat_send_button)
     public void onClickSendMessage() {
-        // 1 - Check if text field is not empty and current user properly downloaded from Firestore
-        if (!TextUtils.isEmpty(editTextMessage.getText()) ){
-            // 2 - Create a new Message to Firestore
+        if (!TextUtils.isEmpty(editTextMessage.getText()) ){  //on vérifie que l'input n'est pas vide
+
             MessageDatabase database=new MessageDatabase();
-            database.createMessageForChat(editTextMessage.getText().toString(), this.currentChatName, this.getCurrentUser()).addOnFailureListener(this.onFailureListener());
+            database.createMessageForChat(editTextMessage.getText().toString(), this.currentChatName, this.getCurrentUser()).addOnFailureListener(this.onFailureListener()); //on ajoute le message dans Firestore
+
             DocumentReference currentConv=ConversationDatabase.getConversation(this.currentChatName);
-            currentConv.update("lastMessage",editTextMessage.getText().toString());
+            currentConv.update("lastMessage",editTextMessage.getText().toString());  //on met à jour la conversation pour garder l'affichage dans la list de conversations à jour
             Date now=new Date();
             currentConv.update("lastUpdate", FieldValue.serverTimestamp());
-            // 3 - Reset text field
-            this.editTextMessage.setText("");
+
+            this.editTextMessage.setText("");  //on remet l'input à vide
         }
     }
 
 
-
-    @OnClick(R.id.activity_mentor_chat_add_file_button)
-    public void onClickAddFile() { }
-
-    // --------------------
-    // REST REQUESTS
-    // --------------------
-    // 4 - Get Current User from Firestore
-    private void getCurrentUserFromFirestore(){
-        /*UserInfoDatabase.getUser(getCurrentUser()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                modelCurrentUser = documentSnapshot.toObject(UserInfo.class);
-            }
-        });*/
-    }
-
-    // --------------------
-    // UI
-    // --------------------
-    // 5 - Configure RecyclerView with a Query
-    private void configureRecyclerView(String chatName){
-        //Track current chat name
+    private void configureRecyclerView(String chatName){  //met en place la RecyclerView
         this.currentChatName = chatName;
         MessageDatabase database=new MessageDatabase();
-        FirestoreRecyclerOptions<Message> options= new FirestoreRecyclerOptions.Builder<Message>()
+
+        FirestoreRecyclerOptions<Message> options= new FirestoreRecyclerOptions.Builder<Message>() //la requête pour récupérer les messages, qui sera utilisé par l'adapter
                 .setQuery(database.getAllMessageForChat(chatName), Message.class)
                 .setLifecycleOwner(this)
                 .build();
-        //Configure Adapter & RecyclerView
-        this.messageAdapter = new MessageAdapter(options, this, this.getCurrentUser());
+
+        this.messageAdapter = new MessageAdapter(options, this, this.getCurrentUser()); //création de l'adapter
+
         messageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
-                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount()); // Scroll to bottom on new messages
+                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount()); //ramène en bas de la view à l'arivée de nouveau message
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(this.messageAdapter);
     }
 
-    /* 6 - Create options for RecyclerView from a Query
-    private FirestoreRecyclerOptions<Message> generateOptionsForAdapter(Query query){
-        return
-    }*/
-
-    // --------------------
-    // CALLBACK
-    // --------------------
-
     @Override
-    public void onDataChanged() {
-        // 7 - Show TextView in case RecyclerView is empty
+    public void onDataChanged() { //afficher un message si la conversation est vide
         textViewRecyclerViewEmpty.setVisibility(this.messageAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
