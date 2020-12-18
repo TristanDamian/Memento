@@ -14,4 +14,7 @@
   
 ## Utilisateurs pour la connexion:
   * **identifiant**: test@test.fr **mot de passe**: testtest -> beaucoup de conversations, peu de statistiques sur ses alarmes
-  
+  * **identifiant**: stat@test.fr **mot de passe**: teststat -> une alarme avec beaucoup de statistiques
+  * **identifiant**: tristandamian15@gmail.fr **mot de passe**: testtest -> voir l'autre côté de la conversation avec test@test.fr
+  * **identifiant**: test01@test.fr **mot de passe**: testtest -> comptes vide avec infos créées, pour tester l'ajout de nouvelles conversations
+Au moment de la connexion, en cliquant sur register on peut ajouter les informations de l'utilisateur à la base de données en plus du login
