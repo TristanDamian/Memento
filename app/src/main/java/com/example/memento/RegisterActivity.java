@@ -77,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = editPassword.getText().toString().trim();
         String UID = mAuth.getUid();
 
+        //Vérification des champs
         if(fullName.isEmpty())
         {
             editFullName.setError("Full name is required");
@@ -119,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
+        //Enregistrement
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -136,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                         Toast.makeText(RegisterActivity.this,"User has been registered successfully", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
 
+                                        //Ecriture du UID dans un fichier
                                         FileOutputStream fos = null;
                                         try {
                                             fos = openFileOutput(fileName,MODE_PRIVATE);

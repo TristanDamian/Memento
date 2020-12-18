@@ -1,14 +1,16 @@
 package com.example.memento;
 
+//Classe contenant les informations d'un utilisateur
 public class User {
 
-    public String fullname;
-    public String age;
-    public String email;
-    public boolean relax;
-    public boolean sport;
-    public String uid;
+    public String fullname;     //Nom
+    public String age;          //Age
+    public String email;        //Mail
+    public boolean relax;       //Si il est intéressé par des activités avec le tag relaxation
+    public boolean sport;       //Si il est intéressé par des activités avec le tag sport
+    public String uid;          //ID
 
+    //Constructeurs
     public User(){
 
     }
@@ -21,6 +23,7 @@ public class User {
         this.uid = uid;
     }
 
+    //Getters
     public String getfullname() {
         return fullname;
     }
@@ -33,6 +36,19 @@ public class User {
         return email;
     }
 
+    public boolean getRelax() {
+        return relax;
+    }
+
+    public boolean getSport() {
+        return sport;
+    }
+
+    public String getuid() {
+        return uid;
+    }
+
+    //Setters
     public void setfullname(String fullname) {
         this.fullname = fullname;
     }
@@ -45,24 +61,12 @@ public class User {
         this.email = email;
     }
 
-    public boolean getRelax() {
-        return relax;
-    }
-
     public void setRelax(boolean relax) {
         this.relax = relax;
     }
 
-    public boolean getSport() {
-        return sport;
-    }
-
     public void setSport(boolean sport) {
         this.sport = sport;
-    }
-
-    public String getuid() {
-        return uid;
     }
 
     public void setuid(String uid) {

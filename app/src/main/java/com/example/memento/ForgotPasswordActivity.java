@@ -62,6 +62,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     private void resetPassword() {
         String email = editEmail.getText().toString().trim();
 
+        //Vérification des champs
         if(email.isEmpty())
         {
             editEmail.setError("Email is required");
@@ -76,6 +77,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             return;
         }
 
+        //Envoie de l'email de réinitialisation de mot de passe
         progressBar.setVisibility(View.VISIBLE);
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

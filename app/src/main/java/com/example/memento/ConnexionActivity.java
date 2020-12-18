@@ -84,6 +84,8 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
                 break;
 
             case R.id.offlineMode:
+
+                //Lecture du dernier UID connecté dans un fichier
                 file = new File(getFilesDir()+"/"+fileName);
                 singletonData data = singletonData.getInstance();
                 if(file.exists()){
@@ -130,6 +132,7 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
 
+        //Vérification des champs
         if(email.isEmpty())
         {
             editEmail.setError("Email is required");
@@ -160,6 +163,7 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
 
         progressBar.setVisibility(View.VISIBLE);
 
+        //Connexion
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -168,6 +172,7 @@ public class ConnexionActivity extends Activity implements View.OnClickListener 
                     data.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     data.setOfflineModeEnabled(false);
 
+                    //Ecriture du UID dans un fichier
                     FileOutputStream fos = null;
                     try {
                         fos = openFileOutput(fileName,MODE_PRIVATE);
