@@ -52,8 +52,8 @@ public class ProfileActivity extends AppCompatActivity {  //affiche les détails
         String currentUser= FirebaseAuth.getInstance().getUid();
 
         textName.setText(fullname);
-        textEmail.setText(email);
-        textAge.setText(age);
+        textEmail.setText("Email: "+email);
+        textAge.setText("Age: "+age);
 
         newConv.setOnClickListener(new View.OnClickListener() {
             @Override

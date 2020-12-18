@@ -83,7 +83,7 @@ public class AlarmStatsFragment extends Fragment{
 
                             //Récupération des 20 dernières occurences pour le PieChart
                             last20 = (List<Boolean>) document.get("last20");
-                            if(monthlyData != null){
+                            if(last20 != null){
                                 PieData pieData = createPieData();
                                 preparePieChartData(pieData);
                             }
@@ -127,6 +127,8 @@ public class AlarmStatsFragment extends Fragment{
 
         for(Timestamp date : monthlyData){
             cal.setTimeInMillis(date.getSeconds()*1000);
+            int yeartest=cal.get(Calendar.YEAR);
+            int monthtest=date.toDate().getMonth();
             if(cal.get(Calendar.YEAR) == year) // Fait le tri parmi les données pour n'afficher que celles de l'année en cours
                 dataCount[date.toDate().getMonth()] += 1;
         }
